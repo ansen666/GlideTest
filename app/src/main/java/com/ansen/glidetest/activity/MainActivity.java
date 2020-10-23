@@ -1,6 +1,8 @@
 package com.ansen.glidetest.activity;
 
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,11 +11,16 @@ import android.widget.ImageView;
 import com.ansen.glidetest.R;
 import com.ansen.glidetest.app.GlideApp;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.FutureTarget;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 
 import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
+    private ImageView ivCircle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +66,20 @@ public class MainActivity extends AppCompatActivity {
                 .load("https://github.com/ansen666/images/blob/master/" +
                         "public/qrcode_for_gh_14a89f21bd5e_258.jpg?raw=true")
                 .into(imageView);
+
+        ivCircle=findViewById(R.id.iv_circle);
+
+        Glide.with(this).asBitmap().load("https://mo-development.oss-cn-hangzhou.aliyuncs.com/users/avatar/13146666/5f46200b1e5d7.jpg@!small").apply(RequestOptions.bitmapTransform(new CircleCrop())).into(new SimpleTarget<Bitmap>() {
+            @Override
+            public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                ivCircle.setImageBitmap(resource);
+            }
+
+            @Override
+            public void onLoadFailed(@Nullable Drawable errorDrawable) {
+                super.onLoadFailed(errorDrawable);
+            }
+        });
     }
 
     //在后台线程中获取bitmap

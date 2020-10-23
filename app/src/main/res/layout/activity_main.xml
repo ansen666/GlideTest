@@ -17,4 +17,10 @@
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:scaleType="fitCenter"/>
+
+    <ImageView
+        android:id="@+id/iv_circle"
+        android:layout_marginTop="10dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"/>
 </LinearLayout>
